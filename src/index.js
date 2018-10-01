@@ -6,68 +6,68 @@ import './styles.css'
 
 class App extends Component {
   state = {
-    currentDog: null,
-    favoriteDogs: []
+    currentCat: null,
+    favoriteCats: []
   }
 
-  getDog = () => {
-    const url = 'https://dog.ceo/api/breed/akita/images/random'
-    this.setState({ currentDog: null })
+  getCat = () => {
+    const url = 'https://catis.life/cat'
+    this.setState({ currentCat: null })
 
     fetch(url)
       .then(rsp => rsp.json())
-      .then(data => this.setState({ currentDog: data.message }))
+      .then(data => this.setState({ currentCat: data.cat }))
   }
 
-  favoriteDog = dog => {
+  favoriteCat = cat => {
     this.setState(state => ({
-      favoriteDogs: this.state.favoriteDogs.concat(dog)
+      favoriteCats: this.state.favoriteCats.concat(cat)
     }))
   }
 
-  removeFavorite = currentDogIndex => {
+  removeFavorite = currentCatIndex => {
     this.setState(state => ({
-      favoriteDogs: state.favoriteDogs.filter((_, i) => i !== currentDogIndex)
+      favoriteCats: state.favoriteCats.filter((_, i) => i !== currentCatIndex)
     }))
   }
 
-  dogInFavorites = dog => this.state.favoriteDogs.includes(dog)
+  catInFavorites = cat => this.state.favoriteCats.includes(cat)
 
-  componentDidMount = () => this.getDog()
+  componentDidMount = () => this.getCat()
 
   render() {
-    const { currentDog, favoriteDogs } = this.state
+    const { currentCat, favoriteCats } = this.state
     return (
       <main>
-        <section className="dog-wrapper">
-          <h1>Choose your favorite dogs</h1>
-          <section className="dog-container">
+        <section className="cat-wrapper">
+          <h1>Choose your favorite cats</h1>
+          <section className="cat-container">
             <figure>
-              {currentDog ? (
-                <img className="dog-image" src={currentDog} alt="DOPE DOG" />
+              {currentCat ? (
+                <img className="cat-image" src={currentCat} alt="DOPE cat" />
               ) : null}
             </figure>
-            <ul className="dog-actions">
+            <ul className="cat-actions">
               <li>
                 <button
                   className="heart-icon"
-                  disabled={this.dogInFavorites(currentDog)}
-                  onClick={() => this.favoriteDog(currentDog)}
+                  disabled={this.catInFavorites(currentCat)}
+                  onClick={() => this.favoriteCat(currentCat)}
                 >
                   <GoHeart size="30" color="#f44336" />
                 </button>
               </li>
               <li>
-                <button onClick={this.getDog}>
+                <button onClick={this.getCat}>
                   <GoArrowRight size="30" />
                 </button>
               </li>
             </ul>
           </section>
-          <ul className="favorite-dogs">
-            {favoriteDogs.map((dog, index) => (
+          <ul className="favorite-cats">
+            {favoriteCats.map((cat, index) => (
               <li>
-                <img class="favorite-dog" src={dog} alt="favorited dog" />
+                <img class="favorite-cat" src={cat} alt="favorited cat" />
                 <button onClick={() => this.removeFavorite(index)}>
                   <GoTrashcan size="20" />
                 </button>
